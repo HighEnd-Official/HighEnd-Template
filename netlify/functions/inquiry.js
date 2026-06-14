@@ -5,6 +5,7 @@ function json(statusCode, payload) {
     statusCode,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin': '*',
     },
     body: JSON.stringify(payload),
   };
@@ -27,12 +28,14 @@ exports.handler = async event => {
     return json(405, { error: 'Method not allowed.' });
   }
 
-  const smtpUser = process.env.SMTP_USER || '';
-  const smtpPass = process.env.SMTP_PASS || '';
+  const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER || process.env.GMAIL_USER || '';
+  const smtpPass = process.env.SMTP_PASS || process.env.EMAIL_PASS || process.env.GMAIL_APP_PASSWORD || '';
   const mailTo = (process.env.MAIL_TO || 'official.highend.lk@gmail.com').trim();
 
   if (!smtpUser || !smtpPass) {
-    return json(500, { error: 'SMTP credentials are not configured.' });
+    return json(500, {
+      error: 'Email is not configured on the hosting server. Add SMTP_USER and SMTP_PASS in Netlify environment variables.',
+    });
   }
 
   try {
@@ -75,6 +78,13 @@ exports.handler = async event => {
 
     return json(200, { ok: true });
   } catch (error) {
-    return json(500, { error: error.message || 'Unable to send inquiry.' });
+    let message = error.message || 'Unable to send inquiry.';
+    if (error.code === 'EAUTH') {
+      message = 'Gmail rejected the SMTP login. Use a Gmail App Password for SMTP_PASS.';
+    } else if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKET') {
+      message = 'Could not connect to Gmail SMTP from the hosting server. Try again or check hosting/network settings.';
+    }
+
+    return json(500, { error: message });
   }
 };

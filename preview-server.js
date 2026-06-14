@@ -51,8 +51,8 @@ function loadEnvFile(filePath) {
 
 loadEnvFile(envFile);
 
-const smtpUser = process.env.SMTP_USER || '';
-const smtpPass = process.env.SMTP_PASS || '';
+const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER || process.env.GMAIL_USER || '';
+const smtpPass = process.env.SMTP_PASS || process.env.EMAIL_PASS || process.env.GMAIL_APP_PASSWORD || '';
 const mailTo = (process.env.MAIL_TO || 'official.highend.lk@gmail.com').trim();
 
 const transporter = nodemailer.createTransport({
@@ -276,7 +276,9 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && urlPath === '/api/inquiry') {
       try {
         if (!smtpUser || !smtpPass) {
-          sendJson(res, 500, { error: 'SMTP credentials are not configured.' });
+          sendJson(res, 500, {
+            error: 'Email is not configured on the hosting server. Add SMTP_USER and SMTP_PASS in Netlify environment variables.',
+          });
           return;
         }
 
@@ -310,7 +312,14 @@ const server = http.createServer(async (req, res) => {
 
         sendJson(res, 200, { ok: true });
       } catch (error) {
-        sendJson(res, 500, { error: error.message || 'Unable to send inquiry.' });
+        let message = error.message || 'Unable to send inquiry.';
+        if (error.code === 'EAUTH') {
+          message = 'Gmail rejected the SMTP login. Use a Gmail App Password for SMTP_PASS.';
+        } else if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKET') {
+          message = 'Could not connect to Gmail SMTP from the hosting server. Try again or check hosting/network settings.';
+        }
+
+        sendJson(res, 500, { error: message });
       }
       return;
     }

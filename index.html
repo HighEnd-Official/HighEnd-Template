@@ -1179,22 +1179,6 @@
       return data;
     }
 
-    async function submitNetlifyInquiry(payload) {
-      const formData = new URLSearchParams();
-      formData.set('form-name', 'inquiry');
-      formData.set('package', payload.package);
-      formData.set('name', payload.name);
-      formData.set('note', payload.note);
-
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData.toString()
-      });
-
-      if (!res.ok) throw new Error('Unable to save inquiry.');
-    }
-
     feedbackForm.addEventListener('submit', async e => {
       e.preventDefault();
       formStatus.textContent = 'Sending inquiry…';
@@ -1205,21 +1189,12 @@
           note: noteInput.value.trim()
         };
         
-        try {
-          await submitApiInquiry(payload);
-          formStatus.textContent = 'Inquiry sent and email delivered successfully.';
-          feedbackForm.reset();
-          setTimeout(closeModal, 1200);
-        } catch (apiErr) {
-          console.warn('API submission failed, falling back to Netlify Forms:', apiErr);
-          await submitNetlifyInquiry(payload);
-          
-          formStatus.textContent = 'Inquiry saved, but email delivery failed. Please contact HIGHEND directly.';
-          feedbackForm.reset();
-          setTimeout(closeModal, 4000);
-        }
+        await submitApiInquiry(payload);
+        formStatus.textContent = 'Inquiry sent and email delivered successfully.';
+        feedbackForm.reset();
+        setTimeout(closeModal, 1200);
       } catch (err) {
-        formStatus.textContent = err.message || 'Unable to send inquiry.';
+        formStatus.textContent = err.message || 'Email could not be sent. Please try again.';
       }
     });
   </script>
