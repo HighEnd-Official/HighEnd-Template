@@ -1155,6 +1155,25 @@
     modal.addEventListener('click', e => { if (e.target === modal) closeModal() });
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal() });
 
+    async function submitApiInquiry(payload) {
+      const res = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      let data = {};
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        data = await res.json();
+      }
+
+      if (!res.ok) {
+        throw new Error(data.error || `Error ${res.status}: Unable to send inquiry.`);
+      }
+      return data;
+    }
+
     async function submitNetlifyInquiry(payload) {
       const formData = new URLSearchParams();
       formData.set('form-name', 'inquiry');
@@ -1168,7 +1187,7 @@
         body: formData.toString()
       });
 
-      if (!res.ok) throw new Error('Unable to send inquiry.');
+      if (!res.ok) throw new Error('Unable to save inquiry.');
     }
 
     feedbackForm.addEventListener('submit', async e => {
@@ -1176,10 +1195,24 @@
       formStatus.textContent = 'Sending inquiry…';
       try {
         const payload = { package: packageSelect.value, name: nameInput.value.trim(), note: noteInput.value.trim() };
-        await submitNetlifyInquiry(payload);
-        formStatus.textContent = 'Inquiry sent successfully.';
-        feedbackForm.reset();
-        setTimeout(closeModal, 900);
+        
+        try {
+          await submitApiInquiry(payload);
+          formStatus.textContent = 'Inquiry sent and email delivered successfully.';
+          feedbackForm.reset();
+          setTimeout(closeModal, 1200);
+        } catch (apiErr) {
+          console.warn('API submission failed, falling back to Netlify Forms:', apiErr);
+          await submitNetlifyInquiry(payload);
+          
+          if (apiErr.message.includes('SMTP credentials')) {
+            formStatus.textContent = 'Inquiry saved. (Email failed: SMTP credentials not set on Netlify)';
+          } else {
+            formStatus.textContent = 'Inquiry saved. (Email failed: API offline/404)';
+          }
+          feedbackForm.reset();
+          setTimeout(closeModal, 4000);
+        }
       } catch (err) {
         formStatus.textContent = err.message || 'Unable to send inquiry.';
       }

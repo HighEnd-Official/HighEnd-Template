@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 const PDFDocument = require('pdfkit');
 
 const root = process.cwd();
-const htmlFile = path.join(root, 'HIGHEND_Luxury_Scrolling_Proposal_UPDATED.html');
+const htmlFile = path.join(root, 'index.html');
 const envFile = path.join(root, '.env');
 const preferredPort = Number(process.env.PORT) || 8000;
 const host = process.env.HOST || '127.0.0.1';
@@ -318,7 +318,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     let filePath = urlPath;
-    if (filePath === '/') filePath = '/HIGHEND_Luxury_Scrolling_Proposal_UPDATED.html';
+    if (filePath === '/') filePath = '/index.html';
     serveFile(res, path.join(root, decodeURIComponent(filePath)));
   });
 
