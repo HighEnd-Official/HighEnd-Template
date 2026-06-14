@@ -9,5 +9,8 @@
   "dependencies": {
     "nodemailer": "^6.10.1",
     "pdfkit": "^0.19.1"
+  },
+  "devDependencies": {
+    "netlify-cli": "^26.1.0"
   }
 }
