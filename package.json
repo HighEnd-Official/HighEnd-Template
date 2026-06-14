@@ -1,0 +1,13 @@
+{
+  "name": "highend-luxury-scrolling-proposal",
+  "version": "1.0.0",
+  "private": true,
+  "main": "preview-server.js",
+  "scripts": {
+    "start": "node preview-server.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.15",
+    "pdfkit": "^0.19.1"
+  }
+}

@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIGHEND | Le Ceylonese Digital Transformation Proposal</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050608;
+      --gold: #d4af37;
+      --gold-soft: #f1df97;
+      --text: #ede7dc;
+      --muted: #a8a093;
+      --line: rgba(212, 175, 55, .18);
+      --panel: rgba(10, 12, 18, .82);
+      --paper: #f5f1e8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      background: linear-gradient(180deg, #020307 0%, #080a0f 50%, #030406 100%);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      width: min(1180px, calc(100% - 24px));
+      margin: 14px auto 0;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border: 1px solid rgba(255, 255, 255, .06);
+      border-radius: 20px;
+      background: rgba(2, 3, 7, .82);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .32);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 2.2px;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--text)
+    }
+
+    .nav-brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      display: block;
+      flex: none;
+    }
+
+    .nav-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid rgba(212, 175, 55, .30);
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+
+    .btn.gold,
+    .submit {
+      background: linear-gradient(135deg, #8a6a1b, #f4df95, #9c7520);
+      color: #090909;
+      border: none;
+      font-weight: 800;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: calc(100vh - 100px);
+      display: grid;
+      place-items: center;
+      padding: 90px 0 60px;
+      text-align: center;
+    }
+
+    .kicker {
+      color: var(--gold-soft);
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      font-size: 12px;
+      margin-bottom: 16px;
+      font-family: 'Cinzel', serif
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(41px, calc(6vw + 1px), 83px);
+      line-height: .95;
+      font-weight: 500;
+      margin: 0 auto 18px;
+      width: min(14ch, 100%)
+    }
+
+    .hero-title .gold,
+    h1 .gold {
+      color: var(--gold-soft)
+    }
+
+    .lead {
+      width: min(760px, 100%);
+      margin: 0 auto 30px;
+      color: #cfc9bd;
+      font-size: clamp(15px, 1.55vw, 19px)
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 64px 0
+    }
+
+    .section-head {
+      margin-bottom: 28px
+    }
+
+    .section-head h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(26px, 3vw, 48px);
+      line-height: 1;
+      color: var(--paper);
+      margin-bottom: 6px
+    }
+
+    .section-head p {
+      max-width: 580px;
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    /* SUMMARY GRID */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 20px 18px;
+    }
+
+    .panel h3 {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px
+    }
+
+    .panel p,
+    .panel li {
+      color: #d3cec4;
+      font-size: 15px
+    }
+
+    .panel ul {
+      list-style: none;
+      display: grid;
+      gap: 7px
+    }
+
+    .panel li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px
+    }
+
+    .panel li::before {
+      content: "";
+      display: block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex: none;
+      margin-top: 7px
+    }
+
+    /* PACKAGE CARDS */
+    .pkg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 20px
+    }
+
+    .pkg-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color .25s;
+    }
+
+    .pkg-card:hover {
+      border-color: rgba(212, 175, 55, .42)
+    }
+
+    .pkg-card.featured {
+      border: 1.5px solid rgba(212, 175, 55, .5);
+      position: relative
+    }
+
+    .pkg-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #8a6a1b, #f4df95, #9c7520);
+      color: #090909;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .pkg-name {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      color: var(--paper);
+      margin-bottom: 4px
+    }
+
+    .pkg-price {
+      color: var(--gold-soft);
+      font-weight: 800;
+      font-size: 24px;
+      letter-spacing: .4px;
+      margin-bottom: 16px
+    }
+
+    .pkg-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-style: italic
+    }
+
+    .pkg-features {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex: 1
+    }
+
+    .pkg-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: #d3cec4
+    }
+
+    .pkg-features li::before {
+      content: "";
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex: none;
+      margin-top: 6px
+    }
+
+    .pkg-card .cta {
+      width: 100%;
+      text-align: center;
+      margin-top: auto;
+      padding: 12px 16px
+    }
+
+    .pkg-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, .22), transparent);
+      margin: 8px 0 16px;
+    }
+
+    .incl-label {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px
+    }
+
+    /* COMPARE TABLE */
+    .compare-wrap {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-top: 20px
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px
+    }
+
+    thead th {
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid var(--line)
+    }
+
+    thead th:not(:first-child) {
+      text-align: center
+    }
+
+    tbody td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, .04);
+      color: #d3cec4;
+      vertical-align: middle
+    }
+
+    tbody td:not(:first-child) {
+      text-align: center
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none
+    }
+
+    tbody tr:hover td {
+      background: rgba(212, 175, 55, .04)
+    }
+
+    .check {
+      color: var(--gold-soft);
+      font-size: 16px
+    }
+
+    .dash {
+      color: #4a473f;
+      font-size: 16px
+    }
+
+    .feat-name {
+      font-weight: 500;
+      color: var(--paper)
+    }
+
+    /* TIMELINE */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px
+    }
+
+    .step {
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid rgba(212, 175, 55, .14)
+    }
+
+    .step .no {
+      color: var(--gold-soft);
+      font-family: 'Cinzel', serif;
+      letter-spacing: 4px;
+      font-size: 11px;
+      margin-bottom: 10px
+    }
+
+    .step h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      color: var(--paper)
+    }
+
+    .step p {
+      color: #c9c3b8;
+      font-size: 14px
+    }
+
+    /* DOWNLOAD STRIP */
+    .download-strip {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: rgba(212, 175, 55, .08);
+      border: 1px solid rgba(212, 175, 55, .24);
+      border-radius: 14px;
+    }
+
+    .download-strip h3 {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 4px
+    }
+
+    .download-strip p {
+      color: #d3cec4;
+      font-size: 14px;
+      max-width: 600px
+    }
+
+    /* SUMMARY */
+    .summary {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 14px
+    }
+
+    .summary-card {
+      padding: 22px
+    }
+
+    .summary-card .amount {
+      font-family: 'Cinzel', serif;
+      font-size: 44px;
+      line-height: 1;
+      color: var(--paper);
+      margin: 8px 0 12px
+    }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 40;
+    }
+
+    .modal-backdrop.open {
+      display: flex
+    }
+
+    .modal {
+      width: min(620px, 100%);
+      background: #0b0c11;
+      border: 1px solid rgba(212, 175, 55, .22);
+      border-radius: 18px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .48);
+      padding: 24px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px
+    }
+
+    .modal-top h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      line-height: 1;
+      margin-top: 4px;
+      color: var(--paper)
+    }
+
+    .close {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      flex: none;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: #16181f;
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .form {
+      display: grid;
+      gap: 14px
+    }
+
+    .field {
+      width: 100%;
+      border: 1px solid rgba(212, 175, 55, .22);
+      background: #12141a;
+      color: var(--text);
+      border-radius: 12px;
+      padding: 13px 14px;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .field:focus {
+      border-color: rgba(212, 175, 55, .55)
+    }
+
+    textarea.field {
+      min-height: 120px;
+      resize: vertical
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px
+    }
+
+    .status {
+      min-height: 20px;
+      font-size: 14px;
+      color: #cfc9bd
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0
+    }
+
+    /* FOOTER */
+    .footer {
+      padding: 30px 0 44px;
+      color: #928b7c;
+      font-size: 14px;
+      text-align: center
+    }
+
+    @media(max-width:900px) {
+
+      .pkg-grid,
+      .grid-2,
+      .timeline,
+      .summary {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:600px) {
+      body {
+        font-size: 15px
+      }
+
+      .wrap {
+        width: min(100% - 28px, 1180px)
+      }
+
+      .nav {
+        top: 8px;
+        width: calc(100% - 20px);
+        margin-top: 8px;
+        padding: 10px;
+        border-radius: 14px;
+        align-items: stretch;
+        gap: 10px;
+        flex-direction: column;
+      }
+
+      .nav-brand {
+        justify-content: center;
+        font-size: 11px;
+        letter-spacing: 1.8px
+      }
+
+      .nav-brand img {
+        width: 34px;
+        height: 34px
+      }
+
+      .nav-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%
+      }
+
+      .btn {
+        width: 100%;
+        padding: 11px 10px;
+        font-size: 11px;
+        letter-spacing: 1px;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.15;
+      }
+
+      .pkg-grid,
+      .grid-2,
+      .timeline,
+      .summary,
+      .form-row {
+        grid-template-columns: 1fr
+      }
+
+      .hero {
+        padding: 52px 0 40px;
+        min-height: auto
+      }
+
+      .kicker {
+        font-size: 10.5px;
+        letter-spacing: 2.5px;
+        line-height: 1.5;
+        margin-bottom: 14px
+      }
+
+      h1 {
+        width: 100%;
+        font-size: 36px;
+        line-height: 1.02;
+        margin-bottom: 16px
+      }
+
+      .lead {
+        font-size: 15px;
+        margin-bottom: 22px
+      }
+
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px
+      }
+
+      .section {
+        padding: 42px 0
+      }
+
+      .section-head {
+        margin-bottom: 20px
+      }
+
+      .section-head h2 {
+        font-size: 30px;
+        line-height: 1.08
+      }
+
+      .panel,
+      .pkg-card,
+      .step,
+      .summary-card {
+        border-radius: 12px;
+        padding: 16px
+      }
+
+      .pkg-grid {
+        gap: 14px
+      }
+
+      .pkg-card.featured {
+        margin-top: 10px
+      }
+
+      .pkg-badge {
+        top: -11px;
+        font-size: 9px;
+        padding: 4px 12px;
+        letter-spacing: 1px
+      }
+
+      .pkg-price {
+        font-size: 22px
+      }
+
+      .compare-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch
+      }
+
+      table {
+        min-width: 620px;
+        font-size: 13px
+      }
+
+      thead th,
+      tbody td {
+        padding: 11px 12px
+      }
+
+      .feat-name {
+        min-width: 230px
+      }
+
+      .download-strip {
+        flex-direction: column;
+        align-items: flex-start
+      }
+
+      .download-strip .btn {
+        align-self: stretch
+      }
+
+      .summary-card .amount {
+        font-size: 36px
+      }
+
+      .modal-backdrop {
+        align-items: flex-start;
+        padding: 10px;
+        padding-top: 18px
+      }
+
+      .modal {
+        padding: 18px;
+        border-radius: 14px;
+        max-height: calc(100vh - 36px)
+      }
+
+      .modal-top h2 {
+        font-size: 24px
+      }
+
+      .close {
+        width: 38px;
+        height: 38px
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <img src="SOFTWARE%20ENGINEERING%20TN.png" alt="HIGHEND logo">
+      <span>HIGHEND</span>
+    </div>
+    <div class="nav-actions">
+      <a href="#packages" class="btn">Packages</a>
+      <button class="btn gold js-open-form" type="button" data-package="General enquiry">Send Feedback</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="kicker">Engineering Luxury Digital Experiences<br><br>
+          Prepared exclusively for Le Ceylonese International Hotel Academy</div>
+        <div>
+          <h1><span class="gold">Le Ceylonese</span><br>Digital Transformation Proposal</h1>
+        </div>
+        <p class="lead">A premium admissions and brand experience designed for mobile-first engagement, clearer inquiry
+          flow, and a polished digital presence across all devices.</p>
+        <div class="hero-actions">
+          <a class="btn gold" href="#packages">Explore Packages</a>
+          <button class="btn js-open-form" type="button" data-package="General enquiry">Send Feedback</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Executive Summary</h2>
+          <p>A calm, high-end digital experience with a direct and easy inquiry path, optimised for mobile screens.</p>
+        </div>
+        <div class="grid-2">
+          <article class="panel">
+            <h3>Client</h3>
+            <p>Le Ceylonese International Hotel Academy</p>
+          </article>
+          <article class="panel">
+            <h3>Contact</h3>
+            <p>official.highend.lk@gmail.com<br>077 488 2744</p>
+          </article>
+          <article class="panel">
+            <h3>Core Scope</h3>
+            <ul>
+              <li>Luxury academy website</li>
+              <li>Admissions platform</li>
+              <li>AI-assisted inquiry support</li>
+              <li>Responsive across all devices</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>Investment Overview</h3>
+            <ul>
+              <li>Package 01 — LKR 170,000</li>
+              <li>Package 02 — LKR 290,000</li>
+              <li>Package 03 — LKR 390,000</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="packages">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Package Details</h2>
+          <p>Choose the package that matches your academy's current growth stage. All packages include SSL, SEO, and a
+            premium responsive layout.</p>
+        </div>
+        <div class="pkg-grid">
+
+          <!-- Package 01 -->
+          <article class="pkg-card">
+            <div>
+              <p class="pkg-name">Package 01</p>
+              <p class="pkg-price">LKR 170,000</p>
+              <p class="pkg-sub">Digital foundation — the essential online presence</p>
+              <div class="pkg-divider"></div>
+              <p class="incl-label">What's included</p>
+              <ul class="pkg-features">
+                <li>Luxury academy website (custom design)</li>
+                <li>Online admissions inquiry form</li>
+                <li>Responsive layout (mobile, tablet, desktop)</li>
+                <li>Search engine optimisation (SEO)</li>
+                <li>SSL certificate (secure HTTPS)</li>
+                <li>1 year of web hosting</li>
+                <li>1 year domain registration</li>
+              </ul>
+            </div>
+            <button class="btn gold cta js-open-form" type="button" data-package="Package 01">Request Package
+              01</button>
+          </article>
+
+          <!-- Package 02 -->
+          <article class="pkg-card featured">
+            <span class="pkg-badge">Most Popular</span>
+            <div>
+              <p class="pkg-name">Package 02</p>
+              <p class="pkg-price">LKR 290,000</p>
+              <p class="pkg-sub">Student & admin platform — everything in Package 01, plus:</p>
+              <div class="pkg-divider"></div>
+              <p class="incl-label">All of Package 01, plus</p>
+              <ul class="pkg-features">
+                <li>Student account creation & secure login</li>
+                <li>Personalised student dashboard</li>
+                <li>Admissions intake management panel</li>
+                <li>Document upload system</li>
+                <li>PDF application generation</li>
+                <li>Admin management interface</li>
+              </ul>
+            </div>
+            <button class="btn gold cta js-open-form" type="button" data-package="Package 02">Request Package
+              02</button>
+          </article>
+
+          <!-- Package 03 -->
+          <article class="pkg-card">
+            <div>
+              <p class="pkg-name">Package 03</p>
+              <p class="pkg-price">LKR 390,000</p>
+              <p class="pkg-sub">AI-powered experience — everything in Package 02, plus:</p>
+              <div class="pkg-divider"></div>
+              <p class="incl-label">All of Package 02, plus</p>
+              <ul class="pkg-features">
+                <li>AI website assistant (chat widget)</li>
+                <li>Guided admission chat flow</li>
+                <li>Lead capture & nurturing automation</li>
+                <li>FAQ automation (zero-touch responses)</li>
+                <li>Prospect inquiry analytics</li>
+              </ul>
+            </div>
+            <button class="btn gold cta js-open-form" type="button" data-package="Package 03">Request Package
+              03</button>
+          </article>
+
+        </div>
+
+        <!-- Feature comparison table -->
+        <div class="compare-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Pkg 01</th>
+                <th>Pkg 02</th>
+                <th>Pkg 03</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="feat-name">Luxury academy website</td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+              <tr>
+                <td class="feat-name">Admissions inquiry form</td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+              <tr>
+                <td class="feat-name">Responsive layout</td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+              <tr>
+                <td class="feat-name">SEO + SSL + Hosting + Domain (1 yr)</td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+              <tr>
+                <td class="feat-name">Student accounts & secure login</td>
+                <td><span class="dash">—</span></td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+              <tr>
+                <td class="feat-name">Student dashboard</td>
+                <td><span class="dash">—</span></td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+              <tr>
+                <td class="feat-name">Intake management & document upload</td>
+                <td><span class="dash">—</span></td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+              <tr>
+                <td class="feat-name">PDF application generation</td>
+                <td><span class="dash">—</span></td>
+                <td><span class="check">✦</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+              <tr>
+                <td class="feat-name">AI website assistant</td>
+                <td><span class="dash">—</span></td>
+                <td><span class="dash">—</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+              <tr>
+                <td class="feat-name">Admission guidance chat flow</td>
+                <td><span class="dash">—</span></td>
+                <td><span class="dash">—</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+              <tr>
+                <td class="feat-name">Lead capture & FAQ automation</td>
+                <td><span class="dash">—</span></td>
+                <td><span class="dash">—</span></td>
+                <td><span class="check">✦</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="download-strip" style="margin-top:16px">
+          <div>
+            <h3>Package PDF</h3>
+            <p>Download the full proposal with all three packages, prices, and features as a PDF.</p>
+          </div>
+          <a class="btn gold" href="Download-PDF/Le_Ceylonese_Proposal_Package.pdf" download="Le_Ceylonese_Proposal_Package.pdf">Download PDF</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Investment Architecture</h2>
+          <p>Start with a clean digital foundation and scale as your admissions process grows.</p>
+        </div>
+        <div class="timeline">
+          <article class="step">
+            <div class="no">01</div>
+            <h3>Choose your stage</h3>
+            <p>Select the system that matches where your academy is right now — foundation, platform, or AI-powered.</p>
+          </article>
+          <article class="step">
+            <div class="no">02</div>
+            <h3>Platform capabilities</h3>
+            <p>Admin and student tools are added only when they deliver real operational value.</p>
+          </article>
+          <article class="step">
+            <div class="no">03</div>
+            <h3>Focused delivery</h3>
+            <p>Fewer distractions, a clear roadmap, and a straightforward path from agreement to launch.</p>
+          </article>
+          <article class="step">
+            <div class="no">04</div>
+            <h3>Scale when ready</h3>
+            <p>Upgrade from any package to the next tier as your intake volume and digital needs grow.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="summary">
+          <article class="panel summary-card">
+            <h3>Prepared for a premium first impression</h3>
+            <div class="amount">Luxury</div>
+            <p>Simple structure, direct calls to action, and a stronger visual hierarchy across every screen size.</p>
+          </article>
+          <article class="panel summary-card">
+            <h3>Next step</h3>
+            <p>Choose a package and send a quick inquiry — we will follow up at the configured email address.</p>
+            <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+              <button class="btn gold js-open-form" type="button" data-package="Package 01">Request Package 01</button>
+              <button class="btn gold js-open-form" type="button" data-package="Package 02">Request Package 02</button>
+              <button class="btn gold js-open-form" type="button" data-package="Package 03">Request Package 03</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Prepared by HIGHEND Software Engineering
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="feedbackModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
+      <div class="modal-top">
+        <div>
+          <div class="kicker" style="margin-bottom:10px">Quick Inquiry</div>
+          <h2 id="feedbackTitle">Request package details</h2>
+          <p style="color:var(--muted);margin-top:8px;font-size:14px">Send your selection and any notes straight to the
+            HIGHEND inbox.</p>
+        </div>
+        <button class="close" type="button" id="closeModal" aria-label="Close">×</button>
+      </div>
+      <form class="form" id="feedbackForm">
+        <div class="form-row">
+          <div>
+            <label class="sr-only" for="packageSelect">Package</label>
+            <select class="field" id="packageSelect" name="package">
+              <option>General enquiry</option>
+              <option>Package 01</option>
+              <option>Package 02</option>
+              <option>Package 03</option>
+            </select>
+          </div>
+          <div>
+            <label class="sr-only" for="nameInput">Name</label>
+            <input class="field" id="nameInput" name="name" type="text" placeholder="Your name" required />
+          </div>
+        </div>
+        <div>
+          <label class="sr-only" for="noteInput">Extra note</label>
+          <textarea class="field" id="noteInput" name="note" placeholder="Questions or comments (optional)"></textarea>
+        </div>
+        <div class="status" id="formStatus"></div>
+        <div style="display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap">
+          <button class="btn" type="button" id="cancelModal">Cancel</button>
+          <button class="submit btn" type="submit">Send Inquiry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('feedbackModal');
+    const packageSelect = document.getElementById('packageSelect');
+    const feedbackForm = document.getElementById('feedbackForm');
+    const formStatus = document.getElementById('formStatus');
+    const nameInput = document.getElementById('nameInput');
+    const noteInput = document.getElementById('noteInput');
+
+    function openModal(pkg) {
+      packageSelect.value = pkg || 'General enquiry';
+      formStatus.textContent = '';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      setTimeout(() => nameInput.focus(), 50);
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      feedbackForm.reset();
+    }
+
+    document.querySelectorAll('.js-open-form').forEach(btn => {
+      btn.addEventListener('click', () => openModal(btn.dataset.package || 'General enquiry'));
+    });
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('cancelModal').addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal() });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal() });
+
+    feedbackForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      formStatus.textContent = 'Sending inquiry…';
+      try {
+        const payload = { package: packageSelect.value, name: nameInput.value.trim(), note: noteInput.value.trim() };
+        const res = await fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Unable to send inquiry.');
+        formStatus.textContent = 'Inquiry sent successfully.';
+        feedbackForm.reset();
+        setTimeout(closeModal, 900);
+      } catch (err) {
+        formStatus.textContent = err.message || 'Unable to send inquiry.';
+      }
+    });
+  </script>
+</body>
+
+</html>
