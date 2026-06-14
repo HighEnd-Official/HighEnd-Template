@@ -1194,7 +1194,11 @@
       e.preventDefault();
       formStatus.textContent = 'Sending inquiry…';
       try {
-        const payload = { package: packageSelect.value, name: nameInput.value.trim(), note: noteInput.value.trim() };
+        const payload = {
+          package: packageSelect.value,
+          name: nameInput.value.trim(),
+          note: noteInput.value.trim()
+        };
         
         try {
           await submitApiInquiry(payload);
@@ -1205,11 +1209,7 @@
           console.warn('API submission failed, falling back to Netlify Forms:', apiErr);
           await submitNetlifyInquiry(payload);
           
-          if (apiErr.message.includes('SMTP credentials')) {
-            formStatus.textContent = 'Inquiry saved. (Email failed: SMTP credentials not set on Netlify)';
-          } else {
-            formStatus.textContent = 'Inquiry saved. (Email failed: API offline/404)';
-          }
+          formStatus.textContent = 'Inquiry saved, but email delivery failed. Please contact HIGHEND directly.';
           feedbackForm.reset();
           setTimeout(closeModal, 4000);
         }

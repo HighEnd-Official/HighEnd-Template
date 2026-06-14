@@ -53,10 +53,13 @@ loadEnvFile(envFile);
 
 const smtpUser = process.env.SMTP_USER || '';
 const smtpPass = process.env.SMTP_PASS || '';
-const mailTo = process.env.MAIL_TO || 'official.highend.lk@gmail.com';
+const mailTo = (process.env.MAIL_TO || 'official.highend.lk@gmail.com').trim();
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+  connectionTimeout: 15000,
+  greetingTimeout: 15000,
+  socketTimeout: 15000,
   auth: {
     user: smtpUser,
     pass: smtpPass,
