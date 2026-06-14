@@ -6,40 +6,53 @@ function json(statusCode, payload) {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type, Accept',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Cache-Control': 'no-store',
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(payload || {}),
   };
 }
 
 exports.handler = async event => {
   if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 204,
-      headers: {
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: '',
-    };
+    return json(200, { ok: true });
   }
 
   if (event.httpMethod !== 'POST') {
     return json(405, { error: 'Method not allowed.' });
   }
 
-  const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER || process.env.GMAIL_USER || '';
-  const smtpPass = process.env.SMTP_PASS || process.env.EMAIL_PASS || process.env.GMAIL_APP_PASSWORD || '';
+  const smtpUser =
+    process.env.SMTP_USER ||
+    process.env.EMAIL_USER ||
+    process.env.GMAIL_USER ||
+    '';
+
+  const smtpPass =
+    process.env.SMTP_PASS ||
+    process.env.EMAIL_PASS ||
+    process.env.GMAIL_APP_PASSWORD ||
+    '';
+
   const mailTo = (process.env.MAIL_TO || 'official.highend.lk@gmail.com').trim();
 
   if (!smtpUser || !smtpPass) {
     return json(500, {
-      error: 'Email is not configured on the hosting server. Add SMTP_USER and SMTP_PASS in Netlify environment variables.',
+      error:
+        'Email is not configured. Add SMTP_USER and SMTP_PASS in Netlify environment variables.',
     });
   }
 
   try {
-    const payload = JSON.parse(event.body || '{}');
+    let payload = {};
+
+    try {
+      payload = JSON.parse(event.body || '{}');
+    } catch {
+      return json(400, { error: 'Invalid JSON request body.' });
+    }
+
     const pkg = String(payload.package || 'General enquiry').trim();
     const name = String(payload.name || '').trim();
     const note = String(payload.note || '').trim();
@@ -50,9 +63,6 @@ exports.handler = async event => {
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
-      connectionTimeout: 15000,
-      greetingTimeout: 15000,
-      socketTimeout: 15000,
       auth: {
         user: smtpUser,
         pass: smtpPass,
@@ -60,6 +70,7 @@ exports.handler = async event => {
     });
 
     const subject = `HIGHEND inquiry - ${pkg}`;
+
     const text = [
       `Package: ${pkg}`,
       `Name: ${name}`,
@@ -76,13 +87,15 @@ exports.handler = async event => {
       text,
     });
 
-    return json(200, { ok: true });
+    return json(200, { ok: true, message: 'Inquiry sent successfully.' });
   } catch (error) {
     let message = error.message || 'Unable to send inquiry.';
+
     if (error.code === 'EAUTH') {
       message = 'Gmail rejected the SMTP login. Use a Gmail App Password for SMTP_PASS.';
     } else if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKET') {
-      message = 'Could not connect to Gmail SMTP from the hosting server. Try again or check hosting/network settings.';
+      message =
+        'Could not connect to Gmail SMTP from Netlify. Check SMTP settings and try again.';
     }
 
     return json(500, { error: message });
