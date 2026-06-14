@@ -1084,7 +1084,7 @@
   </footer>
 
   <!-- MODAL -->
-  <div class="modal-backdrop" id="feedbackModal" aria-hidden="true">
+  <div class="modal-backdrop" id="feedbackModal" aria-hidden="true" inert>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
       <div class="modal-top">
         <div>
@@ -1137,13 +1137,18 @@
     function openModal(pkg) {
       packageSelect.value = pkg || 'General enquiry';
       formStatus.textContent = '';
+      modal.removeAttribute('inert');
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       setTimeout(() => nameInput.focus(), 50);
     }
     function closeModal() {
+      if (modal.contains(document.activeElement)) {
+        document.activeElement.blur();
+      }
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
+      modal.setAttribute('inert', '');
       feedbackForm.reset();
     }
 
